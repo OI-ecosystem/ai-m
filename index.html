@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-m · AI Mentor · Think. Type. Do.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1714;
+    --ink-mid: #3a3530;
+    --ink-light: #6b6560;
+    --parchment: #f5f1eb;
+    --parchment-dark: #ede8e0;
+    --gold: #c8a84b;
+    --gold-light: #e8d08a;
+    --cream: #faf8f4;
+    --white: #ffffff;
+    --sage: #5a7a6a;
+    --red: #8b2c2c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--ink);
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(200,168,75,0.12) 0%, transparent 60%);
+  }
+
+  .header-inner { position: relative; z-index: 1; }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 300;
+    color: var(--parchment);
+    letter-spacing: 0.05em;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .logo span {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  .tagline {
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .methodology-line {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: rgba(245,241,235,0.4);
+    text-transform: uppercase;
+  }
+
+  /* BELT DOTS */
+  .belt-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+    margin: 1.2rem 0 0;
+  }
+
+  .belt-dots span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  /* HERO SECTION */
+  .hero {
+    background: var(--ink);
+    padding: 3rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero-line {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    font-weight: 300;
+    color: var(--parchment);
+    font-style: italic;
+    line-height: 1.3;
+    max-width: 700px;
+    margin: 0 auto 1.5rem;
+  }
+
+  .hero-sub {
+    font-size: 0.9rem;
+    color: rgba(245,241,235,0.6);
+    max-width: 500px;
+    margin: 0 auto 2rem;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .progression {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+  }
+
+  .prog-item {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(245,241,235,0.5);
+  }
+
+  .prog-arrow {
+    color: var(--gold);
+    font-size: 0.8rem;
+    opacity: 0.7;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* PRODUCTS SECTION */
+  .products-section {
+    padding: 4rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 300;
+    text-align: center;
+    color: var(--ink);
+    margin-bottom: 3rem;
+  }
+
+  /* PRODUCT CARDS */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .product-card {
+    background: var(--white);
+    border: 1px solid var(--parchment-dark);
+    border-radius: 2px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(26,23,20,0.1);
+  }
+
+  .card-header {
+    padding: 1.5rem 1.5rem 1rem;
+    border-bottom: 1px solid var(--parchment-dark);
+    position: relative;
+  }
+
+  .card-badge {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    border-radius: 1px;
+    font-weight: 500;
+  }
+
+  .badge-entry { background: #f0f7f3; color: var(--sage); border: 1px solid #c8e0d4; }
+  .badge-learn { background: #f5f0e8; color: #8b6914; border: 1px solid #e0d0a0; }
+  .badge-build { background: #f0f4ff; color: #3a5080; border: 1px solid #c0ccee; }
+  .badge-operator { background: #1a1714; color: var(--gold); border: 1px solid #3a3020; }
+  .badge-bundle { background: #2c1a1a; color: #e8b0b0; border: 1px solid #5a2a2a; }
+
+  .card-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .card-name {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+
+  .card-subtitle {
+    font-size: 0.8rem;
+    color: var(--ink-light);
+    font-style: italic;
+  }
+
+  .card-body {
+    padding: 1.2rem 1.5rem;
+    flex: 1;
+  }
+
+  .card-hook {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--ink-mid);
+    margin-bottom: 1rem;
+    line-height: 1.4;
+  }
+
+  .card-features {
+    list-style: none;
+    margin-bottom: 1.2rem;
+  }
+
+  .card-features li {
+    font-size: 0.8rem;
+    color: var(--ink-light);
+    padding: 0.25rem 0;
+    padding-left: 1rem;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .card-features li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+
+  .card-footer {
+    padding: 1rem 1.5rem 1.5rem;
+  }
+
+  .buy-btn {
+    display: block;
+    width: 100%;
+    padding: 0.85rem 1rem;
+    background: var(--ink);
+    color: var(--parchment);
+    text-decoration: none;
+    text-align: center;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: background 0.2s ease;
+    border-radius: 1px;
+  }
+
+  .buy-btn:hover { background: var(--ink-mid); }
+
+  .buy-btn.gold {
+    background: var(--gold);
+    color: var(--ink);
+  }
+
+  .buy-btn.gold:hover { background: var(--gold-light); }
+
+  /* FEATURED CARD — ARCHITECT */
+  .product-card.featured {
+    border-color: var(--gold);
+    border-width: 1px;
+    position: relative;
+  }
+
+  .featured-mark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* BUNDLE CARD — FULL WIDTH */
+  .bundle-row {
+    margin-top: 1.5rem;
+  }
+
+  .bundle-card {
+    background: var(--ink);
+    border: 1px solid #3a3020;
+    border-radius: 2px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .bundle-left {
+    padding: 2rem 2.5rem;
+    border-right: 1px solid #3a3020;
+  }
+
+  .bundle-right {
+    padding: 2rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .bundle-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .bundle-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 300;
+    color: var(--parchment);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+
+  .bundle-save {
+    font-size: 0.75rem;
+    color: rgba(245,241,235,0.5);
+    margin-bottom: 1.5rem;
+  }
+
+  .bundle-save strong { color: var(--gold-light); }
+
+  .bundle-includes {
+    list-style: none;
+  }
+
+  .bundle-includes li {
+    font-size: 0.8rem;
+    color: rgba(245,241,235,0.6);
+    padding: 0.3rem 0;
+    padding-left: 1.2rem;
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .bundle-includes li:last-child { border-bottom: none; }
+
+  .bundle-includes li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 0.7rem;
+  }
+
+  .bundle-price-block {
+    margin-bottom: 1.5rem;
+  }
+
+  .bundle-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: var(--parchment);
+    line-height: 1;
+  }
+
+  .bundle-was {
+    font-size: 0.8rem;
+    color: rgba(245,241,235,0.4);
+    text-decoration: line-through;
+    margin-top: 0.2rem;
+  }
+
+  .bundle-btn {
+    display: block;
+    padding: 1rem 1.5rem;
+    background: var(--gold);
+    color: var(--ink);
+    text-decoration: none;
+    text-align: center;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: background 0.2s ease;
+    border-radius: 1px;
+    margin-bottom: 0.75rem;
+  }
+
+  .bundle-btn:hover { background: var(--gold-light); }
+
+  .bundle-note {
+    font-size: 0.7rem;
+    color: rgba(245,241,235,0.35);
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+
+  /* METHODOLOGY STRIP */
+  .methodology {
+    background: var(--parchment-dark);
+    padding: 3rem 2rem;
+    text-align: center;
+    border-top: 1px solid #ddd8d0;
+    border-bottom: 1px solid #ddd8d0;
+  }
+
+  .methodology-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+
+  .rc-loop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .rc-stage {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--gold);
+    background: rgba(200,168,75,0.06);
+  }
+
+  .rc-arrow { color: var(--gold); font-size: 1rem; }
+
+  .methodology-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--ink-mid);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--parchment);
+    margin-bottom: 0.3rem;
+  }
+
+  .footer-logo span { color: var(--gold); font-style: italic; }
+
+  .footer-copy {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: rgba(245,241,235,0.3);
+    text-transform: uppercase;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 700px) {
+    .bundle-card { grid-template-columns: 1fr; }
+    .bundle-left { border-right: none; border-bottom: 1px solid #3a3020; }
+    .product-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo">AI<span>-m</span></div>
+    <div class="tagline">AI Mentor · Think. Type. Do.</div>
+    <div class="methodology-line">Built on the RC Loop Methodology · © Signal333</div>
+    <div class="belt-dots">
+      <span style="background:#e8e0d0"></span>
+      <span style="background:#e8c84a"></span>
+      <span style="background:#e87a30"></span>
+      <span style="background:#50b870"></span>
+      <span style="background:#4878d0"></span>
+      <span style="background:#8a5030"></span>
+      <span style="background:#1a1714"></span>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-line">You know what you want to achieve.<br>You just don't know how to tell the AI.</div>
+  <p class="hero-sub">AI-m is the complete system for getting better results from any AI — from first prompt to advanced operator thinking.</p>
+  <div class="progression">
+    <span class="prog-item">Copy &amp; paste</span>
+    <span class="prog-arrow">→</span>
+    <span class="prog-item">Learn the thinking</span>
+    <span class="prog-arrow">→</span>
+    <span class="prog-item">Engine builds it</span>
+    <span class="prog-arrow">→</span>
+    <span class="prog-item">RC Loop mastery</span>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- PRODUCTS -->
+<section class="products-section">
+  <div class="section-label">The complete AI-m range</div>
+  <h2 class="section-title">Start anywhere. Go as deep as you need.</h2>
+
+  <div class="product-grid">
+
+    <!-- JUST USE THIS -->
+    <div class="product-card">
+      <div class="card-header">
+        <span class="card-badge badge-entry">Start here</span>
+        <div class="card-price">£9.99</div>
+        <div class="card-name">AI-m · Just Use This</div>
+        <div class="card-subtitle">20 ready-made prompts · instant results</div>
+      </div>
+      <div class="card-body">
+        <p class="card-hook">"Still staring at a blank box every time you open ChatGPT?"</p>
+        <ul class="card-features">
+          <li>20 copy-and-paste prompts across 5 categories</li>
+          <li>Emails, social media, work, everyday life, ideas &amp; decisions</li>
+          <li>Fill in the blanks · copy · done</li>
+          <li>No jargon, no learning curve, no blank page</li>
+          <li>1 PDF · instant download · works with any AI</li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <a href="https://opportunity-intelligence.lemonsqueezy.com/checkout/buy/667ecb1f-51f5-41bd-8942-4fbd0e8abc60" class="buy-btn" target="_blank">Buy Now — £9.99</a>
+      </div>
+    </div>
+
+    <!-- CARD SYSTEM -->
+    <div class="product-card">
+      <div class="card-header">
+        <span class="card-badge badge-learn">Learn the thinking</span>
+        <div class="card-price">£27.99</div>
+        <div class="card-name">AI-m Card System</div>
+        <div class="card-subtitle">7 print-ready cards · desk reference</div>
+      </div>
+      <div class="card-body">
+        <p class="card-hook">"Not a prompt list. A thinking system."</p>
+        <ul class="card-features">
+          <li>7 cards — one per stage of the prompting process</li>
+          <li>Notice · Pattern · Choice · Plan · Act · Review · Verify</li>
+          <li>Each card has the core question, a template, and a real example</li>
+          <li>Print · cut · keep on your desk</li>
+          <li>After a few uses you won't need the cards — that's the point</li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <a href="https://opportunity-intelligence.lemonsqueezy.com/checkout/buy/b604a2f5-0e53-4e81-b13e-349a6e0a28b2" class="buy-btn" target="_blank">Buy Now — £27.99</a>
+      </div>
+    </div>
+
+    <!-- PROMPT ENGINE -->
+    <div class="product-card">
+      <div class="card-header">
+        <span class="card-badge badge-build">Engine builds it</span>
+        <div class="card-price">£39.95</div>
+        <div class="card-name">AI-m Prompt Engine</div>
+        <div class="card-subtitle">Interactive HTML tool · works offline</div>
+      </div>
+      <div class="card-body">
+        <p class="card-hook">"Select your task. Answer three questions. Copy your engineered prompt."</p>
+        <ul class="card-features">
+          <li>7 task categories · Write, Plan, Research, Fix, Create, Decide, Data</li>
+          <li>Spell correction on every input</li>
+          <li>Memory isolation — every prompt is context-proof</li>
+          <li>Point of No Return output standard on every result</li>
+          <li>Single HTML file · any browser · no login · works offline</li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <a href="https://opportunity-intelligence.lemonsqueezy.com/checkout/buy/6e31803c-2c1b-4668-942e-e4e56146480b" class="buy-btn" target="_blank">Buy Now — £39.95</a>
+      </div>
+    </div>
+
+    <!-- ARCHITECT ENGINE — FEATURED -->
+    <div class="product-card featured">
+      <div class="featured-mark"></div>
+      <div class="card-header">
+        <span class="card-badge badge-operator">Operator level</span>
+        <div class="card-price" style="color:var(--gold)">£69.95</div>
+        <div class="card-name">AI-m Architect Engine</div>
+        <div class="card-subtitle">4-stage RC Loop pipeline · 3 modes · launch price</div>
+      </div>
+      <div class="card-body">
+        <p class="card-hook">"Turn unclear thinking into clear decisions."</p>
+        <ul class="card-features">
+          <li>4-stage pipeline: Signal → Refine → Compress → Decision</li>
+          <li>Quick · Deep · Decision modes</li>
+          <li>Every output: FINAL DECISION · WHY THIS WINS · DO THIS NOW</li>
+          <li>Deep mode includes cross-model RC instructions</li>
+          <li>Built on the RC Loop Methodology · Documented · Authored · Proprietary</li>
+          <li>Launch price — rises to £99 after first 50 sales</li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <a href="https://opportunity-intelligence.lemonsqueezy.com/checkout/buy/6d1d5693-c475-4f79-813c-b830d19de803" class="buy-btn gold" target="_blank">Buy Now — £69.95</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BUNDLE -->
+  <div class="bundle-row">
+    <div class="bundle-card">
+      <div class="bundle-left">
+        <div class="bundle-eyebrow">Complete system</div>
+        <div class="bundle-title">AI-m Complete Bundle</div>
+        <div class="bundle-save">Everything above in one download. <strong>Save £16</strong> vs buying individually.</div>
+        <ul class="bundle-includes">
+          <li>AI-m Just Use This — 20 ready-made prompts PDF</li>
+          <li>AI-m Card System — 7 print-ready thinking cards</li>
+          <li>AI-m Prompt Engine — interactive HTML tool</li>
+          <li>README — full instructions + the philosophy behind AI-m</li>
+        </ul>
+      </div>
+      <div class="bundle-right">
+        <div class="bundle-price-block">
+          <div class="bundle-price">£69</div>
+          <div class="bundle-was">Individual total: £85</div>
+        </div>
+        <a href="https://opportunity-intelligence.lemonsqueezy.com/checkout/buy/26f7bb92-23f0-4c12-b520-04b36906e7ac" class="bundle-btn" target="_blank">Get the Complete Bundle</a>
+        <div class="bundle-note">Instant download · No login · No subscription · Yours forever</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- METHODOLOGY STRIP -->
+<div class="methodology">
+  <div class="methodology-title">Built on the RC Loop Methodology</div>
+  <div class="rc-loop">
+    <span class="rc-stage">Refine</span>
+    <span class="rc-arrow">→</span>
+    <span class="rc-stage">Compress</span>
+    <span class="rc-arrow">→</span>
+    <span class="rc-stage">Decide</span>
+  </div>
+  <p class="methodology-quote">"This engine is designed to make itself unnecessary. The more you use it, the more you internalise the way it structures thinking. At that point, you're no longer relying on prompts — you're thinking like the system."</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">AI<span>-m</span></div>
+  <div class="footer-copy">RC Loop Methodology · © Signal333 · Personal use only · Digital downloads are non-refundable</div>
+</footer>
+
+</body>
+</html>
